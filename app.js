@@ -6,6 +6,11 @@ var app = express();
 
 app.use('/assets', express.static(__dirname+ '/public'));
 
+app.use('/', (req, res, next) => {
+    console.log('Request Url: ' + req.url);
+    next();
+});
+
 app.get('/', (req, res) => {
      res.send(` <html>
                     <head>
