@@ -1,9 +1,20 @@
 var express = require('express');
 var birds = require('./routes/birds')
+
 var app = express();
 
+
+app.use('/assets', express.static(__dirname+ '/public'));
+
 app.get('/', (req, res) => {
-     res.send('Hello world');
+     res.send(` <html>
+                    <head>
+                        <link href="assets/style.css" type=text/css rel="stylesheet">
+                    </head>
+                        <h1>Hello world</h1>
+                    <body>
+                    </body>
+                </html>`);
 });
 
 
@@ -26,8 +37,6 @@ app.get(/.*fly$/, function (req, res) {
     res.send('/.*fly$/')
   });
 
-
-
 // route handler example
 app.route('/book')
     .get(function (req, res) {
@@ -41,7 +50,7 @@ app.route('/book')
     });
 
 // router module example.
-app.use('/birds', birds)
+app.use('/birds', birds);
 
 app.listen(process.env.PORT || 3000, () => {
     console.log(`Server started on port`);
