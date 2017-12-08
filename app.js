@@ -46,13 +46,13 @@ app.get('/template', (req, res) => {
     res.render('index');
 });
 
-// Templating Example 2
+// Templating and QueryString Example 
 app.get('/template-person/:id', (req, res) => {
-    res.render('person', {id: req.params.id});
+    res.render('person', {
+        id: req.params.id,
+        Qstr: req.query.qstr 
+    });
 });
-
-
-
 
 // pattern eaxample
 app.get(/.*fly$/, function (req, res) {
