@@ -3,25 +3,29 @@ var birds = require('./routes/birds')
 
 var app = express();
 
-
-app.use('/assets', express.static(__dirname+ '/public'));
-
+// use middleware example
 app.use('/', (req, res, next) => {
     console.log('Request Url: ' + req.url);
     next();
 });
 
-app.get('/', (req, res) => {
-     res.send(` <html>
-                    <head>
-                        <link href="assets/style.css" type=text/css rel="stylesheet">
-                    </head>
-                        <h1>Hello world</h1>
-                    <body>
-                    </body>
-                </html>`);
-});
+// use static file example
+app.use('/assets', express.static(__dirname+ '/public'));
 
+// Set Templating engine
+app.set('view engine', 'ejs');
+
+
+app.get('/', (req, res) => {
+    res.send(` <html>
+                   <head>
+                       <link href="assets/style.css" type=text/css rel="stylesheet">
+                   </head>
+                       <h1>Hello world</h1>
+                   <body>
+                   </body>
+               </html>`);
+});
 
 // parameters example
 app.get('/person/:id', (req, res) => {
@@ -36,6 +40,19 @@ app.get('/api', (req, res) => {
          lastname: 'lastname'
      });
 });
+
+// Templating example 1
+app.get('/template', (req, res) => {
+    res.render('index');
+});
+
+// Templating Example 2
+app.get('/template-person/:id', (req, res) => {
+    res.render('person', {id: req.params.id});
+});
+
+
+
 
 // pattern eaxample
 app.get(/.*fly$/, function (req, res) {
