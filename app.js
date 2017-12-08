@@ -1,5 +1,7 @@
 var express = require('express');
-var birds = require('./routes/birds')
+var bodyParser = require('body-parser');
+
+var birds = require('./routes/birds');
 
 var app = express();
 
@@ -15,6 +17,8 @@ app.use('/assets', express.static(__dirname+ '/public'));
 // Set Templating engine
 app.set('view engine', 'ejs');
 
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 app.get('/', (req, res) => {
     res.send(` <html>
@@ -52,6 +56,13 @@ app.get('/template-person/:id', (req, res) => {
         id: req.params.id,
         Qstr: req.query.qstr 
     });
+});
+
+// post example
+app.post('/person', urlencodedParser, (req, res) => {
+   res.send('Thank you!');
+   console.log(req.body.firstname);
+   console.log(req.body.lastname);
 });
 
 // pattern eaxample
