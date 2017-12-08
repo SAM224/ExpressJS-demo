@@ -17,8 +17,11 @@ app.use('/assets', express.static(__dirname+ '/public'));
 // Set Templating engine
 app.set('view engine', 'ejs');
 
+// create application/json parser
+var jsonParser = bodyParser.json();
+
 // create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.get('/', (req, res) => {
     res.send(` <html>
@@ -64,6 +67,13 @@ app.post('/person', urlencodedParser, (req, res) => {
    console.log(req.body.firstname);
    console.log(req.body.lastname);
 });
+
+// post json example
+app.post('/person-json', jsonParser, (req, res) => {
+    console.log('Thank you for the JSON data!');
+    console.log(req.body.firstname);
+    console.log(req.body.lastname);
+ });
 
 // pattern eaxample
 app.get(/.*fly$/, function (req, res) {
